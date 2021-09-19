@@ -1,14 +1,14 @@
 <script>
-  // Prevent forms from submitting.
+  // Neste arquivo esta as funções para armazenar e deleta os dados da planilha google sheet
   function preventFormSubmit() {
-    var forms = document.querySelectorAll('form');
+    var forms = document.querySelectorAll('form');//chama pelo formulario
     for (var i = 0; i < forms.length; i++) {
       forms[i].addEventListener('submit', function(event) {
       event.preventDefault();
       });
     }
   }
-  window.addEventListener("load", functionInit, true); 
+  window.addEventListener("load", functionInit, true); //adiciona os itens a linhas da planilha
   
   //INITIALIZE FUNCTIONS ONLOAD
   function functionInit(){  
@@ -35,12 +35,12 @@
   }
   
   
-  //CREATE THE DATA TABLE
+  //Verifica o cabeçalhos das colunas e adiciona os dados de acordo com a coluna correspondente
   function createTable(dataArray) {
     if(dataArray){
       var result = "<table class='table table-sm' style='font-size:0.8em'>"+
                    "<thead style='white-space: nowrap'>"+
-                     "<tr>"+                               //Change table headings to match witht he Google Sheet
+                     "<tr>"+                               
                       "<th scope='col'>Apagar</th>"+
                       "<th scope='col'>Editar</th>"+
                       "<th scope='col'>Centro</th>"+
@@ -71,7 +71,7 @@
     }
   }
 
-  //DELETE DATA
+  //FUNÇÃO QUE CRIA O POPUP PARA CONFIRMAR O DELETE DE DADOS DA PLANILHA
   function deleteData(el) {
     var result = confirm("Tem certeza que quer deletar este contato?");
     if (result) {
@@ -81,13 +81,13 @@
   }
   
   
-  //EDIT DATA
+  //função para edição dos dados
   function editData(el){
     var recordId = el.parentNode.parentNode.cells[2].innerHTML; //https://stackoverflow.com/a/32377357/2391195
     google.script.run.withSuccessHandler(populateForm).getRecordById(recordId);
   }
 
-  //POPULATE FORM
+  //RETIRA OS CAMPOS APOS CONFIRMAÇÃO DELETE
   function populateForm(records){
     document.getElementById('RecId').value = records[0][0];
     document.getElementById('name').value = records[0][1];
@@ -99,13 +99,13 @@
     document.getElementById("message").innerHTML = "<div class='alert alert-warning' role='alert'>Update Record [ID: "+records[0][0]+"]</div>";
   }
   
-  //RETRIVE DATA FROM GOOGLE SHEET FOR COUNTRY DROPDOWN
+  //busca os estado na pagina Estados
   function createCountryDropdown() {
       //SUBMIT YOUR DATA RANGE FOR DROPDOWN AS THE PARAMETER
-      google.script.run.withSuccessHandler(countryDropDown).getDropdownList("Helpers!A1:A195");
+      google.script.run.withSuccessHandler(countryDropDown).getDropdownList("Estados!A1:A195");
   }
   
-  //POPULATE COUNTRY DROPDOWNS
+  //cria o dropdown com para selecionar os estados incluso na página Estado no formulario
   function countryDropDown(values) { //Ref: https://stackoverflow.com/a/53771955/2391195
     var list = document.getElementById('country');   
     for (var i = 0; i < values.length; i++) {
