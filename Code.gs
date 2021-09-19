@@ -9,25 +9,25 @@ function doGet(request) {
 }
 
 
-/* DEFINE GLOBAL VARIABLES, CHANGE THESE VARIABLES TO MATCH WITH YOUR SHEET */
+/* Variaveis globais do projeto - ADIONE O ID da sua planilha Google Sheet no "spreasheetId" */
 function globalVariables(){ 
   var varArray = {
-    spreadsheetId   : '15_euas-ZI6N7X-ZxIgSFjTfx7a9Tw_99USsWcxsZeyU', //** CHANGE !!!
-    dataRage        : 'Data!A2:G',                                    //** CHANGE !!!
-    idRange         : 'Data!A2:A',                                    //** CHANGE !!!
-    lastCol         : 'G',                                            //** CHANGE !!!
-    insertRange     : 'Data!A1:G1',                                   //** CHANGE !!!
-    sheetID         : '0'                                             //** CHANGE !!! Ref:https://developers.google.com/sheets/api/guides/concepts#sheet_id
+    spreadsheetId   : '15_euas-ZI6N7X-ZxIgSFjTfx7a9Tw_99USsWcxsZeyU', //** Adicione o Id da sua planilha aqui!!!
+    dataRage        : 'Data!A2:G',                                    //** adiciona os dados com os limites e página definidos neste campo !!!
+    idRange         : 'Data!A2:A',                                    //** id de linha definidos nesta coluna !!!
+    lastCol         : 'G',                                         //** adiciona os estados selecionados no dropdown do formulario nesta coluna!!!
+    insertRange     : 'Data!A1:G1',                                   //** executa a adição !!!
+    sheetID         : '0'             //**  mais detalhes na documentação!!! Ref:https://developers.google.com/sheets/api/guides/concepts#sheet_id
   };
-  return varArray;
+  return varArray; 
 }
 
 /*
-# PROCESSING FORM ---------------------------------------------------------------------------------
+# Processando o formulário ---------------------------------------------------------------------------------
 */
 
 
-/* PROCESS FORM */
+/* Funçao para processar o formulário */
 function processForm(formObject){  
   if(formObject.RecId && checkID(formObject.RecId)){//Execute if form passes an ID and if is an existing ID
     updateData(getFormValues(formObject),globalVariables().spreadsheetId,getRangeByID(formObject.RecId)); // Update Data
